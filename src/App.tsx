@@ -1,24 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { FC, useState, useEffect } from "react";
+import ShowQuote from "./ShowQuote";
 
-function App() {
+function App<FC>() {
+  const [quote, setQuote] = useState("");
+  const [author, setAuthor] = useState("");
+
+  const handleFetchNewQuote = async () => {
+    const response = await fetch("https://favqs.com/api/qotd");
+    const data = await response.json();
+
+    setQuote(data.quote.body);
+    setAuthor(data.quote.author);
+  };
+
+  useEffect(() => {
+    handleFetchNewQuote();
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div id="quote-box">
+      <ShowQuote
+        quote={quote}
+        author={author}
+        handleClick={handleFetchNewQuote}
+      />
     </div>
   );
 }
