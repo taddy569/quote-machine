@@ -2,8 +2,8 @@ import React, { FC, useState, useEffect } from "react";
 import ShowQuote from "./ShowQuote";
 
 function App<FC>() {
-  const [quote, setQuote] = useState("");
-  const [author, setAuthor] = useState("");
+  const [quote, setQuote] = useState<string>("");
+  const [author, setAuthor] = useState<string>("");
 
   const handleFetchNewQuote = async () => {
     const response = await fetch("https://favqs.com/api/qotd");
